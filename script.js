@@ -2,14 +2,17 @@
  *  script.js
  *  ---------
  *  Where all the fun happens :)
- *  
+ *
  *  Created by: E.Cope						Last edit: 3/27/21
  *****************************************************************************/
 
 //store the classes and ids we'll be manipulating
-const iconIdsArr = ["#icon-1", "#icon-2", "#icon-3", "#icon-4", "#icon-5"];
+const iconIdsArr = ["#icon-1", "#icon-2", "#icon-3", "#icon-4", "#icon-5",
+                    "#icon-6", "#icon-7", "#icon-8", "#icon-9"];
 const slotClassArr = [".s1", ".s2", ".s3"];
 
+let counter = 0;
+let data = [[0,4,3], [5,1,2], [4,4,6], [8,1,7], [5,8,8]];
 //setup stat variables
 let DataStore = { "wins": 0, "loses": 0, "most": 0, "least": 0 };
 const LocalStore = window.localStorage;
@@ -33,7 +36,7 @@ function disappear() {
 //displays the appropriate icons in their slots given three random numbers
 function magicAct(num1, num2, num3) {
 	//reset icons
-	disappear(); 
+	disappear();
 	for (let i = 0; i < iconIdsArr.length; i++) {
 		//check slot one
 		if (num1 == i) {
@@ -131,7 +134,9 @@ function resetLocalStorage() {
 $(document).ready(function(){
 	//clear slots
 	disappear();
-	let spinCount = 0;
+  $(".icon").css("visibility", "visible");
+
+  let spinCount = 0;
 	//load spinCount stats data
 	$("#num-spins").text(spinCount);
 
@@ -142,7 +147,7 @@ $(document).ready(function(){
 		//load our stats data
 		refreshStats();
 
-	} else { 
+	} else {
 		console.warn("Web Storage not supported! \
 					 Features for this site will be missing.");
 	}
@@ -152,19 +157,17 @@ $(document).ready(function(){
 
 		//CASE -- We Won:
 		if ($("#try-your-luck").text() === "WINNER!") {
-			
+
 			return;
 		}
 		//CASE -- We Lost:
 		else {
 			//generate our random indices for the slot icons
-			let dice = [];
-			for (let i = 0; i < slotClassArr.length; i++) {
-				let r = rng(0, iconIdsArr.length);
-				dice.push(r);
-			}
+			let dice = data[counter % data.length];
+      counter += 1;
 
-			//increment spinCount (number of spins)							
+
+			//increment spinCount (number of spins)
 			spinCount += 1;
 			$("#num-spins").text(spinCount);
 			//increment lose in DataStore (number of loses stat)
@@ -179,7 +182,7 @@ $(document).ready(function(){
 			//check if we've won
 			winCondition(dice[0], dice[1], dice[2], spinCount);
 		}
-		
+
 		//refresh stats
 		refreshStats();
 	});

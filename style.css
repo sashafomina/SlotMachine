@@ -76,7 +76,7 @@ body {
 .s2 { grid-area: s2; }
 .s3 { grid-area: s3; }
 
-.slot { 
+.slot {
 	background-color: var(--slotBgColor);
 	border-radius: 10px;
 }
@@ -85,6 +85,8 @@ body {
 	margin-top: 15%;
 	width: 80px;
 	height: 80px;
+	visibility: hidden;
+
 }
 
 /* Icon Color Adjustments */
